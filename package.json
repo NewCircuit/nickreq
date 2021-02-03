@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "start": "tsc && node build/."
+  },
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "discord.js-commando": "github:discordjs/commando"
+  },
+  "name": "nickname-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
