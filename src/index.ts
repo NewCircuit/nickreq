@@ -9,9 +9,4 @@ client.on("ready", () => {
     console.log(`Ready as ${client.user?.tag}`)
 })
 
-client.on("message", (msg: Message) => {
-    console.log(msg.content);
-})
-
-
 client.login("");
