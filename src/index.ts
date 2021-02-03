@@ -11,4 +11,5 @@ client.on("message", (msg: Message) => {
     console.log(msg.content);
 })
 
+
 client.login("");
