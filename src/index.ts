@@ -1,17 +1,19 @@
-import { CommandoClient } from "discord.js-commando"
-import { Message } from "discord.js"
+import { CommandoClient } from 'discord.js-commando';
+import path from 'path';
 
 const client = new CommandoClient({
-    commandPrefix: ".nick"
-})
+  commandPrefix: '.nick',
+});
 
-client.on("ready", () => {
-    console.log(`Ready as ${client.user?.tag}`)
-})
+client.on('ready', () => {
+  console.log(`Ready as ${client.user?.tag}`);
+});
 
-client.on("message", (msg: Message) => {
-    console.log(msg.content);
-})
+client.registry
+  .registerGroups([
+    ['general'],
+  ])
+  .registerDefaults()
+  .registerCommandsIn(path.join(__dirname, 'commands'));
 
-
-client.login("");
+client.login('');
