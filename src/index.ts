@@ -1,5 +1,8 @@
 import { CommandoClient } from 'discord.js-commando';
 import path from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const client = new CommandoClient({
   commandPrefix: '.nick',
@@ -16,4 +19,4 @@ client.registry
   .registerDefaults()
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
-client.login('');
+client.login(process.env.DISCORD_TOKEN);

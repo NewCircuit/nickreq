@@ -17,7 +17,8 @@ export default class Request extends Command {
     });
   }
 
-  public async run(msg: CommandoMessage): Promise<null> {
+  public async run(msg: CommandoMessage, { nickname }: { nickname: string }): Promise<null> {
+    await msg.say(nickname);
     return null;
   }
 }
