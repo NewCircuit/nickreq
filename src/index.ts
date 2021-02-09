@@ -1,11 +1,16 @@
 import { CommandoClient } from 'discord.js-commando';
 import path from 'path';
 import dotenv from 'dotenv';
+import { Activity } from 'discord.js';
 
 dotenv.config();
 
 const client = new CommandoClient({
   commandPrefix: '.nick',
+  presence: {
+    status: "dnd"
+  
+  }
 });
 
 client.on('ready', () => {
