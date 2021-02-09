@@ -21,31 +21,34 @@ export default class Request extends Command {
 
   public async run(msg: CommandoMessage, { nickname }: { nickname: string }): Promise<null> {
     
-const embed = new MessageEmbed();
-embed.title = "Nickname Request";
-embed.description = nickname;
-embed.footer = {
-  text: 'Request sent!',
-  iconURL: 'https://brianmunoz.co/pewdiepie/images/pew-thumbsup.png',
-};
- embed.color = 0x62bd0d;
- embed.author = {
-  name: 'Success!',
-  iconURL: '',
-};
+  const embed = new MessageEmbed();
+  embed.title = "Nickname Request";
+  embed.description = nickname;
+  embed.footer = {
+    text: 'Request sent!',
+    iconURL: 'https://brianmunoz.co/pewdiepie/images/pew-thumbsup.png',
+  };
+  embed.color = 0x62bd0d;
+  embed.author = {
+    name: 'Success!',
+    iconURL: '',
+  };
 
-await msg.channel.send(embed);
-if (process.env.CHANNEL_ID === undefined) {
-  return null
-  
-}
+    const channelMsg = await msg.channel.send({embed: embed});
+  await channelMsg.react('807829322919706624');
 
-const channel = await this.client.channels.fetch(process.env.CHANNEL_ID) as TextChannel;
+  await msg.channel.send(embed);
+   console.log("what");
+   if  (process.env.CHANNEL_ID === undefined) {
+    return null
+    
+  }
+
+  const channel = await this.client.channels.fetch(process.env.CHANNEL_ID) as TextChannel;
 
 
-channel.send ("Request")
-embed.title= "Nickname request"
-embed.description = "Nickname Request for user"
+  channel.send ("Request")
+
 
 
 

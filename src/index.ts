@@ -7,12 +7,7 @@ dotenv.config();
 
 const client = new CommandoClient({
   commandPrefix: '.nick',
- 
-
-  
 });
-
-
 
 client.on('ready', () => {
   console.log(`Ready as ${client.user?.tag}`);
