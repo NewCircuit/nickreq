@@ -35,16 +35,17 @@ export default class Request extends Command {
   };
 
     const channelMsg = await msg.channel.send({embed: embed});
-  await channelMsg.react('807829322919706624');
+  await channelMsg.react('👍');
 
-  await msg.channel.send(embed);
-   console.log("what");
+
+   
    if  (process.env.CHANNEL_ID === undefined) {
     return null
     
   }
 
   const channel = await this.client.channels.fetch(process.env.CHANNEL_ID) as TextChannel;
+  
 
 
   channel.send ("Request")
