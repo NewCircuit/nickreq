@@ -1,14 +1,14 @@
 {
-	"token": "ODU3NTEwMTIyNjk5NzUxNDI1.YNQoiQ.LWu46_PXV79GwSrNEIFCKlUZDKA",
-	"botId": "857510122699751425",
-	"channelid": "857634734611628073",
+	"token": "",
+	"botId": "",
+	"channelid": "",
 	"color": "0x20d84e",
-	"ownerid": "602569683543130113",
+	"ownerid": "",
 	"postgres": {
-		"username": "postgres",
-		"password": "postgres",
-		"host": "172.17.0.3",
+		"username": "",
+		"password": "",
+		"host": "",
 		"port": 5432,
-		"dbname": "nickreq"
+		"dbname": ""
 	}
 }
