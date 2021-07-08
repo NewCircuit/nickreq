@@ -1,14 +1,18 @@
 {
   "dependencies": {
-    "@newcircuit/logging.js": "git+https://github.com/NewCircuit/logging.js.git",
     "discord-buttons": "^3.2.1",
     "discord.js": "^12.5.3",
     "discord.js-commando": "^0.12.3",
+    "js-yaml": "^4.1.0",
     "pg": "^8.5.1",
     "process": "^0.11.10",
     "require": "^2.4.20"
   },
   "devDependencies": {
-    "@types/node": "^15.12.5"
+    "@types/node": "^15.12.5",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-typescript": "^12.3.1"
   }
 }
