@@ -24,7 +24,7 @@ const pool = new Pool({
 // .catch(err => console.error(err))
 // .finally(() => pool.end())
 
-export default class Db {
+export default class DB {
   static async check(userid: String) {
     const results = await pool.query('SELECT * FROM nickreq WHERE user_id = $1 AND state IS NULL', [userid]);
     return results.rows;

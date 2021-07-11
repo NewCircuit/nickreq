@@ -2,7 +2,7 @@ const commando = require('discord.js-commando');
 import { join } from 'path';
 import { load } from 'js-yaml';
 import { readFileSync } from 'fs';
-import Db from './db.js';
+import DB from './db.js';
 
 const fileContents = readFileSync('./config.yml', 'utf8');
 const config = load(fileContents);
@@ -56,9 +56,9 @@ client.on('clickButton', async (button) => {
     } catch (err) {
       await button.message.channel.send(`I am missing permissions to change this users nickname. (${button.message.embeds[0].author.name})`);
     }
-    await Db.accept(user.id);
+    await DB.accept(user.id);
   } else {
-    await Db.reject(user.id);
+    await DB.reject(user.id);
   }
   try {
     await user.send(`<@${user.id}>, your nickname ${nickname} has been ${button.id}.`);

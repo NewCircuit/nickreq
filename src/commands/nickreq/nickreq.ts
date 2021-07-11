@@ -2,7 +2,7 @@ const commando = require('discord.js-commando');
 const { MessageButton, MessageActionRow } = require('discord-buttons');
 import { load } from 'js-yaml';
 import { readFileSync } from 'fs';
-import Db from '../../db.js';
+import DB from '../../db.js';
 import { MessageEmbed } from 'discord.js';
 
 
@@ -40,12 +40,12 @@ export default class NickReq extends commando.Command {
       return;
     }
 
-    const check = await Db.check(message.author.id);
+    const check = await DB.check(message.author.id);
     if (check.length !== 0) {
       await message.reply('You already have an ongoing request!');
       return;
     }
-    await Db.insert(message.author.id, nick);
+    await DB.insert(message.author.id, nick);
 
     const channel = await message.guild.channels.cache.get(config.channelid);
 
