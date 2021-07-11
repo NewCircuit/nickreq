@@ -1,11 +1,11 @@
-const pg = require('pg');
-const yaml = require('js-yaml');
-const fs = require('fs');
+import { Pool } from 'pg';
+import { load } from 'js-yaml';
+import { readFileSync } from 'fs';
 
-const fileContents = fs.readFileSync('./config.yml', 'utf8');
-const config = yaml.load(fileContents);
+const fileContents = readFileSync('./config.yml', 'utf8');
+const config = load(fileContents);
 
-const pool = new pg.Pool({
+const pool = new Pool({
   user: config.postgres.username,
   password: config.postgres.password,
   host: config.postgres.host,
@@ -24,7 +24,7 @@ const pool = new pg.Pool({
 // .catch(err => console.error(err))
 // .finally(() => pool.end())
 
-export default class db {
+export default class Db {
   static async check(userid: String) {
     const results = await pool.query('SELECT * FROM nickreq WHERE user_id = $1 AND state IS NULL', [userid]);
     return results.rows;

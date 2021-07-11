@@ -1,12 +1,13 @@
 const commando = require('discord.js-commando');
-const discord = require('discord.js');
 const { MessageButton, MessageActionRow } = require('discord-buttons');
-const yaml = require('js-yaml');
-const fs = require('fs');
-const db = require('../../db.js').default;
+import { load } from 'js-yaml';
+import { readFileSync } from 'fs';
+import Db from '../../db.js';
+import { MessageEmbed } from 'discord.js';
 
-const fileContents = fs.readFileSync('./config.yml', 'utf8');
-const config = yaml.load(fileContents);
+
+const fileContents = readFileSync('./config.yml', 'utf8');
+const config = load(fileContents);
 
 export default class NickReq extends commando.Command {
   constructor(client) {
@@ -39,16 +40,16 @@ export default class NickReq extends commando.Command {
       return;
     }
 
-    const check = await db.check(message.author.id);
+    const check = await Db.check(message.author.id);
     if (check.length !== 0) {
       await message.reply('You already have an ongoing request!');
       return;
     }
-    await db.insert(message.author.id, nick);
+    await Db.insert(message.author.id, nick);
 
     const channel = await message.guild.channels.cache.get(config.channelid);
 
-    const embed = new discord.MessageEmbed({
+    const embed = new MessageEmbed({
       title: 'Nickname Request',
       description: `I would like to set my nickname to: \`${nick}\``,
       color: config.color,
@@ -59,16 +60,16 @@ export default class NickReq extends commando.Command {
       footer: { text: message.author.id },
     });
     const button1 = new MessageButton()
-      .setLabel('Accept')
-      .setStyle('green')
-      .setID('Accepted');
+    .setLabel('Accept')
+    .setStyle('green')
+    .setID('Accepted');
     const button2 = new MessageButton()
-      .setLabel('Reject')
-      .setStyle('red')
-      .setID('Rejected');
+    .setLabel('Reject')
+    .setStyle('red')
+    .setID('Rejected');
     const row = new MessageActionRow()
-      .addComponent(button1)
-      .addComponent(button2);
+    .addComponent(button1)
+    .addComponent(button2);
     await channel.send({
       embed,
       component: row,

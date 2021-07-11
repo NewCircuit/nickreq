@@ -1,17 +1,17 @@
 const commando = require('discord.js-commando');
-const path = require('path');
-const yaml = require('js-yaml');
-const fs = require('fs');
+import { join } from 'path';
+import { load } from 'js-yaml';
+import { readFileSync } from 'fs';
+import Db from './db.js';
 
-const fileContents = fs.readFileSync('./config.yml', 'utf8');
-const config = yaml.load(fileContents);
+const fileContents = readFileSync('./config.yml', 'utf8');
+const config = load(fileContents);
 
 const client = new commando.CommandoClient({
   commandPrefix: '.nick ',
   owner: config.ownerid,
 });
 require('discord-buttons')(client);
-const db = require('./db.js').default;
 
 client.on('ready', () => {
   for (const item in config) {
@@ -56,9 +56,9 @@ client.on('clickButton', async (button) => {
     } catch (err) {
       await button.message.channel.send(`I am missing permissions to change this users nickname. (${button.message.embeds[0].author.name})`);
     }
-    await db.accept(user.id);
+    await Db.accept(user.id);
   } else {
-    await db.reject(user.id);
+    await Db.reject(user.id);
   }
   try {
     await user.send(`<@${user.id}>, your nickname ${nickname} has been ${button.id}.`);
@@ -66,7 +66,7 @@ client.on('clickButton', async (button) => {
 });
 
 client.registry.registerGroup('nickreq', 'nickreq commands')
-  .registerDefaults()
-  .registerCommandsIn(path.join(__dirname, 'commands'));
+.registerDefaults()
+.registerCommandsIn(join(__dirname, 'commands'));
 
 client.login(config.token);
