@@ -13,16 +13,6 @@ const pool = new Pool({
   database: config.postgres.dbname,
 });
 
-// pool.connect()
-// .then(() => console.log("Connected"))
-// .then(() => pool.query("DROP TABLE nickreq"))
-// .then(() => pool.query(`CREATE TABLE nickreq (
-//  user_id VARCHAR ( 50 ) NOT NULL,
-//  nick VARCHAR ( 50 ) NOT NULL,
-//  state BOOLEAN
-// );`))
-// .catch(err => console.error(err))
-// .finally(() => pool.end())
 
 export default class DB {
   static async check(userid: String) {

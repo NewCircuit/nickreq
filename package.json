@@ -15,5 +15,5 @@
     "eslint": "^7.30.0",
     "eslint-config-airbnb-typescript": "^12.3.1"
   },
-  "license": "GPLV3"
+  "license": "GPLv3"
 }
