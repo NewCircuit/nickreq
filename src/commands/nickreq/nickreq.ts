@@ -1,16 +1,15 @@
-const commando = require('discord.js-commando');
-const { MessageButton, MessageActionRow } = require('discord-buttons');
 import { load } from 'js-yaml';
 import { readFileSync } from 'fs';
+import { MessageEmbed, TextChannel } from 'discord.js';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageButton, MessageActionRow } from 'discord-buttons';
 import DB from '../../db.js';
-import { MessageEmbed } from 'discord.js';
-
 
 const fileContents = readFileSync('./config.yml', 'utf8');
 const config = load(fileContents);
 
-export default class NickReq extends commando.Command {
-  constructor(client) {
+export default class NickReq extends Command {
+  constructor(client: CommandoClient) {
     super(client, {
       name: 'request',
       group: 'nickreq',
@@ -26,28 +25,32 @@ export default class NickReq extends commando.Command {
     });
   }
 
-  async run(message, { nick }) {
-    if (message.guild == null) return;
+  async run(message: CommandoMessage, { nick }: { nick: string }): Promise<null> {
+    if (message.guild == null) return null;
     if (nick.length > 32) {
       await message.reply('The nickname must be less than 32 characters');
-      return;
+      return null;
     }
 
     const re = /^[\\x00-\\x7F]/;
     const testx = re.test(nick);
-    if (testx === true) {
-      await message.send('Illegal charecters in nickname!');
-      return;
+    if (testx) {
+      await message.reply('Illegal charecters in nickname!');
+      return null;
     }
 
     const check = await DB.check(message.author.id);
     if (check.length !== 0) {
       await message.reply('You already have an ongoing request!');
-      return;
+      return null;
     }
     await DB.insert(message.author.id, nick);
 
-    const channel = await message.guild.channels.cache.get(config.channelid);
+    const channel = await this.client.channels.fetch(config.channelid);
+    if (channel === undefined || !(channel instanceof TextChannel)) {
+      console.error('Unable to fetch channel!');
+      return null;
+    }
 
     const embed = new MessageEmbed({
       title: 'Nickname Request',
@@ -55,25 +58,28 @@ export default class NickReq extends commando.Command {
       color: config.color,
       author: {
         name: `${message.author.username}#${message.author.discriminator}`,
-        iconURL: message.author.avatarURL(),
+        iconURL: message.author.avatarURL() || undefined,
       },
       footer: { text: message.author.id },
     });
     const button1 = new MessageButton()
-    .setLabel('Accept')
-    .setStyle('green')
-    .setID('Accepted');
+      .setLabel('Accept')
+      .setStyle('green')
+      .setID('Accepted');
     const button2 = new MessageButton()
-    .setLabel('Reject')
-    .setStyle('red')
-    .setID('Rejected');
+      .setLabel('Reject')
+      .setStyle('red')
+      .setID('Rejected');
     const row = new MessageActionRow()
-    .addComponent(button1)
-    .addComponent(button2);
+      .addComponent(button1)
+      .addComponent(button2);
+
     await channel.send({
       embed,
       component: row,
     });
     await message.reply('Request sent.');
+
+    return null;
   }
 }

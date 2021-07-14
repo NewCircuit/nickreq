@@ -1,8 +1,8 @@
-const commando = require('discord.js-commando');
 import { join } from 'path';
 import { load } from 'js-yaml';
 import { readFileSync } from 'fs';
-import DB from './db.js';
+import * as commando from 'discord.js-commando';
+import DB from './db';
 
 const fileContents = readFileSync('./config.yml', 'utf8');
 const config = load(fileContents);
@@ -11,6 +11,7 @@ const client = new commando.CommandoClient({
   commandPrefix: '.nick ',
   owner: config.ownerid,
 });
+
 require('discord-buttons')(client);
 
 client.on('ready', () => {
@@ -39,10 +40,16 @@ client.on('clickButton', async (button) => {
       title: 'Nickname request',
       description: button.message.embeds[0].description,
       fields: [
-        { name: button.id, value: `By ${button.clicker.user.username}#${button.clicker.user.discriminator} (<@${button.clicker.user.id}>)` },
+        {
+          name: button.id,
+          value: `By ${button.clicker.user.username}#${button.clicker.user.discriminator} (<@${button.clicker.user.id}>)`,
+        },
       ],
       color: 0x20d84e,
-      author: { name: button.message.embeds[0].author.name, iconURL: button.message.embeds[0].author.iconURL },
+      author: {
+        name: button.message.embeds[0].author.name,
+        iconURL: button.message.embeds[0].author.iconURL,
+      },
       footer: button.message.embeds[0].footer,
     },
   });
@@ -50,7 +57,7 @@ client.on('clickButton', async (button) => {
   const arrnickname = [...button.message.embeds[0].description.split(': ')];
   arrnickname.shift();
   const nickname = arrnickname.join(': ');
-  if (button.id == 'Accepted') {
+  if (button.id === 'Accepted') {
     try {
       await user.setNickname(nickname);
     } catch (err) {
@@ -66,7 +73,7 @@ client.on('clickButton', async (button) => {
 });
 
 client.registry.registerGroup('nickreq', 'nickreq commands')
-.registerDefaults()
-.registerCommandsIn(join(__dirname, 'commands'));
+  .registerDefaults()
+  .registerCommandsIn(join(__dirname, 'commands'));
 
-client.login(config.token);
+client.login(config.token).then();
