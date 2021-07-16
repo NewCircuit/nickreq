@@ -20,6 +20,6 @@
   },
   "license": "GPLv3",
   "scripts": {
-    "start": "tsc && echo 'Built.' && node build/index.js"
+    "start": "tsc && node build"
   }
 }

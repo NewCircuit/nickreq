@@ -1,11 +1,10 @@
 token: 
-botId: 
-channelid: 
-color: '0x20d84e'
-ownerid: 
+channelid: ''
+color: 0x20d84e
+ownerid: ''
 postgres:
-  username: 
-  password: 
-  host: 
-  port: 5432
-  dbname: 
+pgusername: 
+pgpassword: 
+pghost: 
+pgport: 5432
+pgdbname: 

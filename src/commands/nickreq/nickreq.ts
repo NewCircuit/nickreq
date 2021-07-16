@@ -1,11 +1,9 @@
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { load } from 'js-yaml';
-import { readFileSync } from 'fs';
 import { MessageEmbed, TextChannel } from 'discord.js';
-import DB from '../../db.js';
+import DB from '../../db';
 
-const file = readFileSync('./config.yml', 'utf8');
-const config: any = load(file)!;
+import Config from '../../config';
+const config = Config.getConfig();
 
 export default class NickReq extends Command {
   constructor(client: CommandoClient) {
@@ -24,7 +22,7 @@ export default class NickReq extends Command {
     });
   }
 
-  async run(message: CommandoMessage, { nick }:{ nick: string }): Promise<null> {
+  async run(message: CommandoMessage, { nick }: { nick: string }): Promise<null> {
     if (message.guild == null) return null;
     if (nick.length > 32) {
       await message.reply('The nickname must be less than 32 characters');
@@ -33,7 +31,7 @@ export default class NickReq extends Command {
 
     const re = /^[\\x00-\\x7F]/;
     const testx = re.test(nick);
-    if (testx === true) {
+    if (testx) {
       await message.reply('Illegal charecters in nickname!');
       return null;
     }

@@ -1,42 +1,25 @@
 const commando = require('discord.js-commando');
 import { join } from 'path';
-import { load } from 'js-yaml';
-import { readFileSync } from 'fs';
-import DB from './db.js';
+import DB from './db';
 
-
-const file = readFileSync('./config.yml', 'utf8');
-const config: any = load(file)!;
+import Config from './config';
+const config = Config.getConfig();
 
 const client = new commando.CommandoClient({
   commandPrefix: '.nick ',
-  owner: config.ownerid,
+  owner: config.ownerid
 });
 
 
 require('discord-buttons')(client);
 
 client.on('ready', () => {
-  for (const item in config) {
-    if (config[item] === null) {
-      throw Error(`${item} Has not been set in config!`);
-    }
-    if (item === 'postgres') {
-      for (const item2 in config[item]) {
-        if (config[item][item2] === null) {
-          throw Error(`${item2} Has not been set in config!`);
-        }
-      }
-    }
-  }
   console.log('Started.');
 });
 
 client.on('clickButton', async (button: any) => {
   await button.reply.defer();
-  if (button.message.author.id != config.botId) {
-    return;
-  }
+  if (button.message.author.id != parseInt(client.user.id)) return;
   await button.message.edit({
     type: 1,
     embed: {

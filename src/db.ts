@@ -1,16 +1,14 @@
 import { Pool } from 'pg';
-import { load } from 'js-yaml';
-import { readFileSync } from 'fs';
 
-const file = readFileSync('./config.yml', 'utf8');
-const config: any = load(file)!;
+import Config from './config';
+const config = Config.getConfig();
 
 const pool = new Pool({
-  user: config.postgres.username,
-  password: config.postgres.password,
-  host: config.postgres.host,
-  port: config.postgres.port,
-  database: config.postgres.dbname,
+  user: config.pgusername,
+  password: config.pgpassword,
+  host: config.pghost,
+  port: config.pgport,
+  database: config.pgdbname,
 });
 
 
