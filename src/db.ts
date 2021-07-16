@@ -2,8 +2,8 @@ import { Pool } from 'pg';
 import { load } from 'js-yaml';
 import { readFileSync } from 'fs';
 
-const fileContents = readFileSync('./config.yml', 'utf8');
-const config = load(fileContents);
+const file = readFileSync('./config.yml', 'utf8');
+const config: any = load(file)!;
 
 const pool = new Pool({
   user: config.postgres.username,

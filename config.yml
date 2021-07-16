@@ -1,7 +1,7 @@
 token: 
 botId: 
 channelid: 
-color: 0x20d84e
+color: '0x20d84e'
 ownerid: 
 postgres:
   username: 

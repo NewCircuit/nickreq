@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "discord-buttons": "^3.2.1",
+    "discord-buttons": "github:discord-buttons/discord-buttons",
     "discord.js": "^12.5.3",
     "discord.js-commando": "^0.12.3",
     "js-yaml": "^4.1.0",
@@ -9,11 +9,17 @@
     "require": "^2.4.20"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.2",
     "@types/node": "^15.12.5",
+    "@types/pg": "^8.6.1",
+    "@types/ws": "^7.4.6",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "eslint": "^7.30.0",
     "eslint-config-airbnb-typescript": "^12.3.1"
   },
-  "license": "GPLv3"
+  "license": "GPLv3",
+  "scripts": {
+    "start": "tsc && echo 'Built.' && node build/index.js"
+  }
 }

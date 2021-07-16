@@ -102,15 +102,36 @@
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
 
+"@types/js-yaml@^4.0.2":
+  "integrity" "sha512-KbeHS/Y4R+k+5sWXEYzAZKuB1yQlZtEghuhRxrVRLaqhtoG5+26JwQsa4HyS3AWX8v1Uwukma5HheduUDskasA=="
+  "resolved" "https://registry.npmjs.org/@types/js-yaml/-/js-yaml-4.0.2.tgz"
+  "version" "4.0.2"
+
 "@types/json-schema@^7.0.7":
   "integrity" "sha512-YSBPTLTVm2e2OoQIDYx8HaeWJ5tTToLH67kXR7zYNGupXMEHa2++G8k+DczX2cFVgalypqtyZIcU19AFcmOpmg=="
   "resolved" "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.8.tgz"
   "version" "7.0.8"
 
-"@types/node@^15.12.5":
+"@types/node@*", "@types/node@^15.12.5":
   "integrity" "sha512-wF6hazbsnwaW3GhK4jFuw5NaLDQVRQ6pWQUGAUrJzxixFkTaODSiAKMPXuHwPEPkAKQWHAzj6uJ5h+3zU9gQxg=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-15.14.1.tgz"
   "version" "15.14.1"
+
+"@types/pg@^8.6.1":
+  "integrity" "sha512-1Kc4oAGzAl7uqUStZCDvaLFqZrW9qWSjXOmBfdgyBP5La7Us6Mg4GBvRlSoaZMhQF/zSj1C8CtKMBkoiT8eL8w=="
+  "resolved" "https://registry.npmjs.org/@types/pg/-/pg-8.6.1.tgz"
+  "version" "8.6.1"
+  dependencies:
+    "@types/node" "*"
+    "pg-protocol" "*"
+    "pg-types" "^2.2.0"
+
+"@types/ws@^7.4.6":
+  "integrity" "sha512-ijZ1vzRawI7QoWnTNL8KpHixd2b2XVb9I9HAqI3triPsh1EC0xH0Eg6w2O3TKbDCgiNNlJqfrof6j4T2I+l9vw=="
+  "resolved" "https://registry.npmjs.org/@types/ws/-/ws-7.4.6.tgz"
+  "version" "7.4.6"
+  dependencies:
+    "@types/node" "*"
 
 "@typescript-eslint/eslint-plugin@^4.28.2":
   "integrity" "sha512-PGqpLLzHSxq956rzNGasO3GsAPf2lY9lDUBXhS++SKonglUmJypaUtcKzRtUte8CV7nruwnDxtLUKpVxs0wQBw=="
@@ -497,10 +518,9 @@
   dependencies:
     "path-type" "^4.0.0"
 
-"discord-buttons@^3.2.1":
-  "integrity" "sha512-UN5xOLG0TwTX6Qr/hjdSyP63HxOYxs5saxfdJ/vijSqjfa/yVPgxO2InKF0l8rpsDOVMsLWGDFLI3+Ax97/LOg=="
-  "resolved" "https://registry.npmjs.org/discord-buttons/-/discord-buttons-3.2.1.tgz"
-  "version" "3.2.1"
+"discord-buttons@github:discord-buttons/discord-buttons":
+  "resolved" "git+ssh://git@github.com/discord-buttons/discord-buttons.git#2dd931fca786b54f26f470d5179a197d0181e77b"
+  "version" "4.0.0"
 
 "discord.js-commando@^0.12.3":
   "integrity" "sha512-BNLhTnyFuNsF1TOd9JOu8tRoV1wi3G4AG3WWMc8qtfur8W0fYQ2jmi5CklKU4Q6JqFYjHkLeRMeZv3rAfDOKjQ=="
@@ -1506,12 +1526,12 @@
   "resolved" "https://registry.npmjs.org/pg-pool/-/pg-pool-3.3.0.tgz"
   "version" "3.3.0"
 
-"pg-protocol@^1.5.0":
+"pg-protocol@*", "pg-protocol@^1.5.0":
   "integrity" "sha512-muRttij7H8TqRNu/DxrAJQITO4Ac7RmX3Klyr/9mJEOBeIpgnF8f9jAfRz5d3XwQZl5qBjF9gLsUtMPJE0vezQ=="
   "resolved" "https://registry.npmjs.org/pg-protocol/-/pg-protocol-1.5.0.tgz"
   "version" "1.5.0"
 
-"pg-types@^2.1.0":
+"pg-types@^2.1.0", "pg-types@^2.2.0":
   "integrity" "sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA=="
   "resolved" "https://registry.npmjs.org/pg-types/-/pg-types-2.2.0.tgz"
   "version" "2.2.0"

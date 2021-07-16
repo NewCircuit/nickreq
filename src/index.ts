@@ -4,13 +4,16 @@ import { load } from 'js-yaml';
 import { readFileSync } from 'fs';
 import DB from './db.js';
 
-const fileContents = readFileSync('./config.yml', 'utf8');
-const config = load(fileContents);
+
+const file = readFileSync('./config.yml', 'utf8');
+const config: any = load(file)!;
 
 const client = new commando.CommandoClient({
   commandPrefix: '.nick ',
   owner: config.ownerid,
 });
+
+
 require('discord-buttons')(client);
 
 client.on('ready', () => {
@@ -29,12 +32,13 @@ client.on('ready', () => {
   console.log('Started.');
 });
 
-client.on('clickButton', async (button) => {
+client.on('clickButton', async (button: any) => {
+  await button.reply.defer();
   if (button.message.author.id != config.botId) {
-    await button.defer();
     return;
   }
   await button.message.edit({
+    type: 1,
     embed: {
       title: 'Nickname request',
       description: button.message.embeds[0].description,
@@ -45,6 +49,26 @@ client.on('clickButton', async (button) => {
       author: { name: button.message.embeds[0].author.name, iconURL: button.message.embeds[0].author.iconURL },
       footer: button.message.embeds[0].footer,
     },
+    components: [
+            {
+              type: 2,
+              style: 3,
+              label: 'Accept',
+              emoji: undefined,
+              disabled: true,
+              url: undefined,
+              custom_id: 'Accepted'
+            },
+            {
+              type: 2,
+              style: 4,
+              label: 'Reject',
+              emoji: undefined,
+              disabled: true,
+              url: undefined,
+              custom_id: 'Rejected'
+            }
+          ],
   });
   const user = await button.guild.members.fetch(button.message.embeds[0].footer.text);
   const arrnickname = [...button.message.embeds[0].description.split(': ')];
