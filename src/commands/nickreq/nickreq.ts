@@ -3,6 +3,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import DB from '../../db';
 
 import Config from '../../config';
+
 const config = Config.getConfig();
 
 export default class NickReq extends Command {
@@ -69,7 +70,7 @@ export default class NickReq extends Command {
           emoji: undefined,
           disabled: false,
           url: undefined,
-          custom_id: 'Accepted'
+          custom_id: 'Accepted',
         },
         {
           type: 2,
@@ -78,11 +79,11 @@ export default class NickReq extends Command {
           emoji: undefined,
           disabled: false,
           url: undefined,
-          custom_id: 'Rejected'
-        }
+          custom_id: 'Rejected',
+        },
       ],
-      embed: embed
-    }
+      embed,
+    };
     await channel.send(buttonEmbed);
     await message.reply('Request sent.');
     return null;

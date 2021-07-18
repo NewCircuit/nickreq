@@ -1,10 +1,10 @@
-token: 
-channelid: ''
-color: 0x20d84e
-ownerid: ''
-postgres:
-pgusername: 
-pgpassword: 
-pghost: 
-pgport: 5432
-pgdbname: 
+token:  
+channelid: 
+color: '0x20d84e'
+ownerid: 
+database:
+  username: 
+  password: 
+  host: 
+  port: 5432
+  dbname: 
