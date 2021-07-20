@@ -30,36 +30,34 @@ export default class NickReq extends Command {
       return null;
     }
 
-    const re = /^[\\x00-\\x7F]/;
-    const testx = re.test(nick);
+    const testx = /[^A-Za-z0-9]/.test(nick);
     if (testx) {
-      await message.reply('Illegal charecters in nickname!');
+      await message.reply('Illegal charecters in start of nickname!');
       return null;
     }
-
     const check = await DB.check(message.author.id);
     if (check.length !== 0) {
       await message.reply('You already have an ongoing request!');
       return null;
     }
-    await DB.insert(message.author.id, nick);
 
     const channel = await this.client.channels.fetch(config.channelid);
     if (channel === undefined || !(channel instanceof TextChannel)) {
       console.error('Unable to fetch channel!');
       return null;
     }
+    await DB.insert(message.author.id, nick);
 
     const embed = new MessageEmbed({
       title: 'Nickname Request',
       description: `I would like to set my nickname to: ${nick}`,
-      color: config.color,
+      color: (config.color!==null) ? config.color : 0xFFFF00,
       author: {
         name: `${message.author.username}#${message.author.discriminator}`,
         iconURL: message.author.avatarURL() || undefined,
       },
-      footer: { text: message.author.id },
-    });
+      footer: { text: `${message.author.id}` },
+    }).setTimestamp();
     const buttonEmbed = {
       type: 1,
       components: [

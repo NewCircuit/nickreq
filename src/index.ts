@@ -30,12 +30,13 @@ client.on('clickButton', async (button: any) => {
           value: `By ${button.clicker.user.username}#${button.clicker.user.discriminator} (<@${button.clicker.user.id}>)`,
         },
       ],
-      color: 0x20d84e,
+      color: (button.id === 'Accepted') ? 0x00FF00 : 0xFF0000,
       author: {
         name: button.message.embeds[0].author.name,
         iconURL: button.message.embeds[0].author.iconURL,
       },
       footer: button.message.embeds[0].footer,
+      timestamp: button.message.embeds[0].timestamp
     },
     components: [
       {
