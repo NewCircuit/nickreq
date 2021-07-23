@@ -1,7 +1,8 @@
 token:  
 channelid: 
-color: '0x20d84e'
+color: 
 ownerid: 
+modrole: 
 database:
   username: 
   password: 

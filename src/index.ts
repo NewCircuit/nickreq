@@ -36,7 +36,7 @@ client.on('clickButton', async (button: any) => {
         iconURL: button.message.embeds[0].author.iconURL,
       },
       footer: button.message.embeds[0].footer,
-      timestamp: button.message.embeds[0].timestamp
+      timestamp: button.message.embeds[0].timestamp,
     },
     components: [
       {

@@ -18,6 +18,8 @@ export default class Config {
 
   public readonly ownerid: string;
 
+  public readonly modrole: string;
+
   public readonly database: Database;
 
   private static LOCATION = './config.yml';
@@ -27,6 +29,7 @@ export default class Config {
     this.channelid = '';
     this.color = 0;
     this.ownerid = '';
+    this.modrole = '';
     this.database = {
       username: '',
       password: '',
