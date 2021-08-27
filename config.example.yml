@@ -1,9 +1,9 @@
-token: 
-botId: 
+token:  
 channelid: 
-color: 0x20d84e
+color: 
 ownerid: 
-postgres:
+modrole: 
+database:
   username: 
   password: 
   host: 

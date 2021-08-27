@@ -1,21 +1,21 @@
-const commando = require('discord.js-commando');
-const { MessageButton, MessageActionRow } = require('discord-buttons');
-import { load } from 'js-yaml';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { readFileSync } from 'fs';
-import DB from '../../db.js';
-import { MessageEmbed } from 'discord.js';
+import DB from '../../db';
 
+import Config from '../../config';
 
-const fileContents = readFileSync('./config.yml', 'utf8');
-const config = load(fileContents);
+const config = Config.getConfig();
 
-export default class NickReq extends commando.Command {
-  constructor(client) {
+export default class NickReq extends Command {
+  constructor(client: CommandoClient) {
     super(client, {
       name: 'request',
       group: 'nickreq',
       memberName: 'request',
       description: 'Main Nickname Request commands',
+      guildOnly: true,
+      examples: ['request example nickname'],
       args: [
         {
           key: 'nick',
@@ -26,54 +26,72 @@ export default class NickReq extends commando.Command {
     });
   }
 
-  async run(message, { nick }) {
-    if (message.guild == null) return;
+  async run(message: CommandoMessage, { nick }: { nick: string }): Promise<null> {
     if (nick.length > 32) {
       await message.reply('The nickname must be less than 32 characters');
-      return;
+      return null;
     }
 
-    const re = /^[\\x00-\\x7F]/;
-    const testx = re.test(nick);
-    if (testx === true) {
-      await message.send('Illegal charecters in nickname!');
-      return;
+    const testx = /^[A-Za-z0-9]/.test(nick);
+    if (!testx) {
+      await message.reply('Illegal charecters in start of nickname!');
+      return null;
     }
-
     const check = await DB.check(message.author.id);
     if (check.length !== 0) {
       await message.reply('You already have an ongoing request!');
-      return;
+      return null;
+    }
+
+    const bannedWords = readFileSync('./bannedwords.txt', 'utf-8').split('\n').filter((e) => e !== '');
+    const testy = new RegExp(`(${bannedWords.join('|')})`, 'g').test(nick);
+    if (testy) {
+      await message.reply('You cannot use those words in your nickname.');
+      return null;
+    }
+    const channel = await this.client.channels.fetch(config.channelid);
+    if (channel === undefined || !(channel instanceof TextChannel)) {
+      console.error('Unable to fetch channel!');
+      return null;
     }
     await DB.insert(message.author.id, nick);
 
-    const channel = await message.guild.channels.cache.get(config.channelid);
-
     const embed = new MessageEmbed({
       title: 'Nickname Request',
-      description: `I would like to set my nickname to: \`${nick}\``,
-      color: config.color,
+      description: `I would like to set my nickname to: ${nick}`,
+      color: (config.color !== null) ? config.color : 0xFFFF00,
       author: {
         name: `${message.author.username}#${message.author.discriminator}`,
-        iconURL: message.author.avatarURL(),
+        iconURL: message.author.avatarURL() || undefined,
       },
-      footer: { text: message.author.id },
-    });
-    const button1 = new MessageButton()
-    .setLabel('Accept')
-    .setStyle('green')
-    .setID('Accepted');
-    const button2 = new MessageButton()
-    .setLabel('Reject')
-    .setStyle('red')
-    .setID('Rejected');
-    const row = new MessageActionRow()
-    .addComponent(button1)
-    .addComponent(button2);
-    await channel.send({
+      footer: { text: `${message.author.id}` },
+    }).setTimestamp();
+    const buttonEmbed = {
+      type: 1,
+      components: [
+        {
+          type: 2,
+          style: 3,
+          label: 'Accept',
+          emoji: undefined,
+          disabled: false,
+          url: undefined,
+          custom_id: 'Accepted',
+        },
+        {
+          type: 2,
+          style: 4,
+          label: 'Reject',
+          emoji: undefined,
+          disabled: false,
+          url: undefined,
+          custom_id: 'Rejected',
+        },
+      ],
       embed,
-      component: row,
-    });
+    };
+    await channel.send(buttonEmbed);
     await message.reply('Request sent.');
+    return null;
   }
 }
