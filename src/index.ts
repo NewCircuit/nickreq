@@ -75,11 +75,13 @@ client.on('clickButton', async (button: any) => {
   }
   try {
     await user.send(`<@${user.id}>, your nickname ${nickname} has been ${button.id}.`);
-  } catch {}
+  } catch {
+    console.log(`Unable to dm user: ${user.id}`);
+  }
 });
 
 client.registry.registerGroup('nickreq', 'nickreq commands')
   .registerDefaults()
   .registerCommandsIn(join(__dirname, 'commands'));
 
-client.login(config.token);
+client.login(config.token).catch(console.error);
