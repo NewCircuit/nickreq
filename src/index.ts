@@ -16,6 +16,7 @@ client.on('ready', () => {
   console.log('Started.');
 });
 
+// eslint-disable-next-line
 client.on('clickButton', async (button: any) => {
   await button.reply.defer();
   if (button.message.author.id !== client.user.id) return;
