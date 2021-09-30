@@ -45,7 +45,7 @@ export default class NickReq extends Command {
 
     const bannedWords = readFileSync('./bannedwords.txt', 'utf-8').split('\n').filter((e) => e !== '');
     const testy = new RegExp(`(${bannedWords.join('|')})`, 'g').test(nick);
-    if (bannedWords.join().trim() !== "" && testy) {
+    if (bannedWords.join().trim() !== '' && testy) {
       await message.reply('You cannot use those words in your nickname.');
       return null;
     }
