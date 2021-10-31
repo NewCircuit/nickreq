@@ -1,6 +1,8 @@
 import { join } from 'path';
 import DB from './db';
 import Config from './config';
+import { writeFile } from 'fs';
+
 
 const commando = require('discord.js-commando');
 
@@ -13,6 +15,9 @@ const client = new commando.CommandoClient({
 require('discord-buttons')(client);
 
 client.on('ready', () => {
+  writeFile('./bannedwords.txt', '', { flag: 'wx' }, function (err) {
+    if (err) {};
+  });
   // eslint-disable-next-line no-console
   console.log('Started.');
 });

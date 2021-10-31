@@ -27,6 +27,9 @@ export default class NickReq extends Command {
   }
 
   async run(message: CommandoMessage, { nick }: { nick: string }): Promise<null> {
+    if (config.allowedChannels.indexOf(+message.channel.id) < 0) {
+      return null;
+    }
     if (nick.length > 32) {
       await message.reply('The nickname must be less than 32 characters');
       return null;

@@ -6,3 +6,4 @@ package-lock.json
 .idea
 build
 config.yml
+bannedwords.txt

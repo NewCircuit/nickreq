@@ -20,6 +20,8 @@ export default class Config {
 
   public readonly modrole: string;
 
+  public readonly allowedChannels: Array<number>;
+
   public readonly database: Database;
 
   private static LOCATION = './config.yml';
@@ -30,6 +32,7 @@ export default class Config {
     this.color = 0;
     this.ownerid = '';
     this.modrole = '';
+    this.allowedChannels = [];
     this.database = {
       username: '',
       password: '',
